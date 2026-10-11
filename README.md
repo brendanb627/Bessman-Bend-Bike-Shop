@@ -19,5 +19,9 @@ Liam Anderson is enjoying his trip and wants to keep his rental bike for another
 * No extending rentals via the website. You must talk to an employee
 
 ## Use Case Diagram
-
+![Administration](./attachments/customerprocess.png)
+![inventory](./attachments/inventory.png)
+![process payment](./attachments/processpayment.png)
+![reservations](./attachments/reservations.png)
+![administration](./attachments/administration.png)
 
