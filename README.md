@@ -18,10 +18,24 @@ Liam Anderson is enjoying his trip and wants to keep his rental bike for another
 * Selling bikes through the system. Website is only for rentals
 * No extending rentals via the website. You must talk to an employee
 
-## Use Case Diagram
+## Use Case Diagrams
 ![Administration](./attachments/customerprocess.png)
 ![inventory](./attachments/inventory.png)
 ![process payment](./attachments/processpayment.png)
 ![reservations](./attachments/reservations.png)
 ![administration](./attachments/administration.png)
+
+## UX Diagrams
+![Administration](./attachments/customerprocesspage.png)
+![inventory](./attachments/inventorypage.png)
+![administration](./attachments/administrationpage.png)
+
+## Wireframe
+https://www.figma.com/design/gY1pNZ6asoRmgTT3BV0Wv3/Bend-Bike-Shop-Wireframe?node-id=0-1&t=SzMW8r6lMLAo9mb8-1
+
+## Prototype
+https://brendanb627.github.io/bend_bike_shop_prototype.html
+
+
+
 
