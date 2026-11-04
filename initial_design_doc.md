@@ -153,9 +153,6 @@ flowchart TD
 
     Home -->|Edit employee permissions| PermissionsPage[Employee permissions page]
     PermissionsPage -->|Back| Home
-
-    classDef page fill:#101820,stroke:#ffffff,color:#ffffff
-    class Home,BusinessReportPage,InventoryReportPage,PermissionsPage page
 ```
 ```mermaid
 flowchart TD
@@ -164,8 +161,6 @@ flowchart TD
     InventoryPage -->|List bike as available| AvailableBanner[Bike listed available banner]
     InventoryPage -->|List bike as unavailable| UnavailableBanner[Bike listed unavailable banner]
 
-    classDef page fill:#101820,stroke:#ffffff,color:#ffffff
-    classDef result fill:#101820,stroke:#ffffff,color:#ffffff
     class InventoryPage page
     class AvailableBanner,UnavailableBanner result
 ```
@@ -182,8 +177,186 @@ flowchart TD
     Charges -->|Add replacement fee| ReplacementBanner[Added replacement fee banner]
     Charges -->|Cancel charges| CancelledBanner[Canceled charges fee banner]
 
-    classDef page fill:#101820,stroke:#ffffff,color:#ffffff
-    classDef result fill:#101820,stroke:#ffffff,color:#ffffff
     class CustomerList,Charges page
     class LateFeeBanner,ReplacementBanner,CancelledBanner result
 ```
+## Class Diagram
+```mermaid
+classDiagram
+    class Customer {
+        customer_id
+        name
+        email
+        phone
+    }
+
+    class Employee {
+        employee_id
+        name
+    }
+
+    class Owner {
+
+    }
+
+    class Bike {
+        bike_id
+        bike_type
+        rental_rate
+    }
+
+    class Payment {
+        payment_id
+        amount
+    }
+
+    class Reservation {
+        reservation_id
+        start_time
+        end_time
+        status
+        total_cost
+    }
+
+    class Charge {
+        charge_id
+        amount
+    }
+
+    class Manager {
+
+    }
+
+    class MaintenanceRecord {
+        maintenance_id
+        description
+        status
+    }
+
+    class Permission {
+        permission_id
+        permission_name
+    }
+
+    Customer --> Reservation
+    Employee --> MaintenanceRecord
+    Bike --> MaintenanceRecord
+    Employee --> Permission
+    Bike --> Reservation
+    Customer --> Charge
+    Reservation --> Charge
+    Employee <-- Manager
+    Manager <-- Owner
+    Reservation --> Payment
+
+```
+## ER Diagram
+```mermaid
+erDiagram
+    CUSTOMER ||--o{RESERVATION:books
+    BIKE ||--o{RESERVATION:included_in
+    RESERVATION ||--o{PAYMENT:paid_with
+    CUSTOMER ||--o{CHARGE:pays
+    EMPLOYEE ||--o{MAINTENANCE:performs
+    BIKE ||--o{MAINTENANCE:serviced_by
+    RESERVATION ||--o{CHARGE:includes
+
+
+    CUSTOMER {
+        int id PK
+        string name
+        string email
+        string phone
+    }
+    BIKE {
+        int id PK
+        string type
+        string status
+        float rate
+    }
+
+    RESERVATION {
+        int id PK
+        int customer_id FK
+        int bike_id FK
+        datetime start
+        datetime end
+        string status
+        float cost
+    }
+
+    PAYMENT {
+        int id PK
+        int reservation_id FK
+        float amount
+    }
+
+    CHARGE {
+        int id PK
+        int customer_id FK
+        int reservation_id FK
+        float amount
+    }
+
+    EMPLOYEE {
+        int id PK
+        string name
+        string role
+        bool active
+    }
+
+    MAINTENANCE {
+        int id PK
+        int bike_id FK
+        int employee_id FK
+        string description
+        string status
+    }
+```
+## Interfaces
+```py
+def browse_bikes(start_time: datetime, end_time: datetime) -> list:
+    # Purpose: Show available bikes.
+    # Requires: Valid rental dates.
+    # Outcomes: Returns available bikes.
+    # Guarantees: Does not affect inventory.
+    # Notes: Does not include bikes in maintenance.
+
+def cancel_reservation(reservation_id: int) -> bool:
+    # Purpose: Cancel a reservation.
+    # Requires: An existing reservation.
+    # Outcomes: Updates reservation status.
+    # Guarantees: Prevents duplicate cancellations.
+    # Notes: 
+
+def reserve_bike(customer_id: int, bike_id: int, start_time: datetime, end_time: datetime) -> ReservationObj:
+    # Purpose: Reserve a bike.
+    # Requires: Available bike and valid dates.
+    # Outcomes: Creates a reservation.
+    # Guarantees: Prevents overlapping reservations.
+    # Notes: 
+
+def record_maintenance(bike_id: int, employee_id: int, description: str) -> MaintenanceObj:
+    # Purpose: Record bike maintenance.
+    # Requires: Existing bike and employee.
+    # Outcomes: Creates a maintenance record.
+    # Guarantees: Bike remains unavailable during maintenance.
+    # Notes: Records completed repairs.
+
+def add_charge(reservation_id: int, amount: float, charge_type: str) -> ChargeObj:
+    # Purpose: Add a customer fee.
+    # Requires: Valid reservation and amount.
+    # Outcomes: Creates a new charge.
+    # Guarantees: Prevents duplicate charges.
+    # Notes: Used for late and replacement fees.
+
+def update_bike(bike_id: int, status: str) -> bool:
+    # Purpose: Update bike status.
+    # Requires: Existing bike.
+    # Outcomes: Saves the new status.
+    # Guarantees: Maintenance bikes cannot be available.
+```
+## Invariants
+
+
+## Failure Modes
