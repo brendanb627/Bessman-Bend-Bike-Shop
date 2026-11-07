@@ -313,6 +313,9 @@ erDiagram
         string status
     }
 ```
+
+
+
 ## Interfaces
 ```py
 def browse_bikes(start_time: datetime, end_time: datetime) -> list:
@@ -356,7 +359,22 @@ def update_bike(bike_id: int, status: str) -> bool:
     # Outcomes: Saves the new status.
     # Guarantees: Maintenance bikes cannot be available.
 ```
+
+
 ## Invariants
+1. Reservations cannot be confirmed without successful payment. Duplicate charges are prevented.
+
+2. Bike inventory and avilability must stay synced across all systems. Bikes under maintenance must remain unavailable.
+
+3. Reservations, payments and maintenance records must reference valid records. Canceled reservations cannot remain active.
+
+4. Bikes cannot have conflicting reservations or be reserved during maintenance
 
 
 ## Failure Modes
+| ID | Failure Mode | Response |
+|---|---|---|
+| F1 | Multiple customers attempt to schedule overlapping reservations | Reject the conflicting reservation and update bike availability. |
+| F2 | System or database becomes unavailable. | Stop operations that require db data and alert administrators/IT. |
+| F3 | Bike requires unexpected maintenance. | Mark the bike unavailable and have staff arrange replacements or cancellations. |
+| F4 | Failure to cancel reservations when store is closed | Give list of failed reservations to manager to manually refund |
