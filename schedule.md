@@ -1,5 +1,5 @@
 
-# Project: Bend Bike Shop Rental System (100%)
+# Bend Bike Shop Rental System
 > [!NOTE] (O, M, P) in hours
   - **Planning and Setup (Supporting Tasks)**
     - Requirements gathering and acceptance criteria (5 days)
