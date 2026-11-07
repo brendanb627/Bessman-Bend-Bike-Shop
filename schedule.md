@@ -1,6 +1,7 @@
 
 # Bend Bike Shop Rental System
-> [!NOTE] (O, M, P) in hours
+> [!NOTE]
+> (O, M, P) in hours
   - **Planning and Setup (Supporting Tasks)**
     - Requirements gathering and acceptance criteria (5 days)
     - System architecture and database schema design (4 days)
@@ -128,7 +129,8 @@ gantt
     In-Store Kiosk Testing :crit, s, 2027-04-15, 50d
     Production Deployment :crit, deploy, 2027-06-04, 3d
 ```
->[!NOTE] Red shows the critical path
+>[!NOTE]
+>Red shows the critical path
 
 | ID | Task | Duration | Predecessor(s) | ES | EF | LS | LF | Slack |
 |---|---|---:|---|---:|---:|---:|---:|---:|
